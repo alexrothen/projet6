@@ -3,13 +3,17 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
 const app = express();
+const helmet = require('helmet');
+
+app.use(helmet());
 
 const saucesRoutes = require('./routes/sauces');
-const usersRoutes = require('./routes/users');
+const userRoutes = require('./routes/user');
 
-mongoose.connect('mongodb+srv://iskander:openclassrooms@cluster0.jh97x.mongodb.net/<dbname>?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://user:openclassrooms@thehottestreviews.jh97x.mongodb.net/test?retryWrites=true&w=majority', {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true
   })
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
@@ -22,8 +26,10 @@ mongoose.connect('mongodb+srv://iskander:openclassrooms@cluster0.jh97x.mongodb.n
   });
 
   app.use(bodyParser.json());
+
+  app.use('/images', express.static(path.join(__dirname, 'images')));
   
   app.use('/api/sauces', saucesRoutes);
-  app.use('/api/auth', usersRoutes);
+  app.use('/api/auth', userRoutes);
 
   module.exports = app;
