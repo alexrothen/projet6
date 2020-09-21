@@ -1,7 +1,8 @@
+// Logique métier des différentes routes
 const Sauce = require('../models/sauce');
 const fs = require('fs');
-const sauce = require('../models/sauce');
 
+// Création d'une sauce (POST)
 exports.createSauce = (req, res, next) => {
 	const sauceObject = JSON.parse(req.body.sauce);
 	const sauce = new Sauce({
@@ -14,6 +15,7 @@ exports.createSauce = (req, res, next) => {
 		.catch((error) => res.status(400).json({ error }));
 };
 
+// Récupération d'une sauce (GET)
 exports.getOneSauce = (req, res, next) => {
 	Sauce.findOne({
 		_id: req.params.id
@@ -28,9 +30,9 @@ exports.getOneSauce = (req, res, next) => {
 		});
 };
 
+// Modification d'une sauce (PUT)
 exports.modifySauce = (req, res, next) => {
-	const sauceObject = req.file
-		? {
+	const sauceObject = req.file ? {
 				...JSON.parse(req.body.sauce),
 				imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
 			}
@@ -40,6 +42,7 @@ exports.modifySauce = (req, res, next) => {
 		.catch((error) => res.status(400).json({ error }));
 };
 
+// Suppression d'une sauce (DELETE)
 exports.deleteSauce = (req, res, next) => {
 	Sauce.findOne({ _id: req.params.id })
 		.then((sauce) => {
@@ -53,6 +56,7 @@ exports.deleteSauce = (req, res, next) => {
 		.catch((error) => res.status(500).json({ error }));
 };
 
+// Récupération des sauces (GET)
 exports.getAllSauces = (req, res, next) => {
 	Sauce.find()
 		.then((sauces) => {
@@ -65,6 +69,7 @@ exports.getAllSauces = (req, res, next) => {
 		});
 };
 
+// Gestion des likes (POST)
 exports.likeSauce = (req, res, next) => {
 		switch (req.body.like) {
 			case -1:
@@ -111,5 +116,3 @@ exports.likeSauce = (req, res, next) => {
 		}
 };
 
-/*db.inventory.find
-( { qty: { $in: [ 5, 15 ] } } )*/
