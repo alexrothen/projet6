@@ -85,37 +85,31 @@ exports.likeSauce = (req, res, next) => {
 				break;
 
 			case 0:
-				if (Sauce.findOne({ usersLiked: { $in: req.params.id } })) {
+				Sauce.findOne({ _id:req.params.id})	
+				.then((sauce)=>{
+				if (sauce.usersLiked.includes(req.body.userId)) {
 					Sauce.updateOne(
 						{ _id: req.params.id },
 						{ $pull: { usersLiked: req.body.userId }, $inc: { likes: -1 } }
 					)
-						.then(() => res.status(200).json({ message: "Vous n'aimez plus cette sauce!" }))
+						.then(() => res.status(200).json({ message: "Vous changez d'avis...dommage" }))
 						.catch((error) => res.status(400).json({ error }));
-				} else {
+						console.log("Vous changez d'avis...dommage" )
+				} else if (sauce.usersDisliked.includes(req.body.userId)) {
 					Sauce.updateOne(
 						{ _id: req.params.id },
 						{ $pull: { usersDisliked: req.body.userId }, $inc: { dislikes: -1 } }
 					)
-						.then(() => res.status(200).json({ message: 'Vous aimez finalement cette sauce !' }))
+						.then(() => res.status(200).json({ message: "Il fallait juste le temps de s'y habituer" }))
 						.catch((error) => res.status(400).json({ error }));
+						console.log("Il fallait juste le temps de s'y habituer")
+
 				}
-				break;
+			})
+			break;
+
 		}
 };
-
-// { $pull: { <field1>: <value|condition>, <field2>: <value|condition>, ... } }
-//db.inventory.find( { qty: { $in: [ 5, 15 ] } } )
-
-//{ $inc: { <field1>: <amount1>, <field2>: <amount2>, ... } }
-
-//{ $push: { <field1>: { <modifier1>: <value1>, ... }, ... } }
-
-/*db.collection.updateOne(
-  <query>,
-  { $set: { status: "D" }, $inc: { quantity: 2 } },
-  ...
-)*/
 
 /*db.inventory.find
 ( { qty: { $in: [ 5, 15 ] } } )*/
