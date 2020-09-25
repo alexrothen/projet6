@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const app = express();
 const helmet = require("helmet");
+require('dotenv').config();
 
 app.use(helmet());
 
@@ -12,7 +13,7 @@ const usersRoutes = require("./routes/users");
 
 mongoose
   .connect(
-    "mongodb+srv://user:openclassrooms@thehottestreviews.jh97x.mongodb.net/test?retryWrites=true&w=majority",
+    process.env_user.DB_URL,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
