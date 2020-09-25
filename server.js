@@ -1,8 +1,11 @@
+//-------------------------CONFIGURATION DU SERVEUR
+
 const http = require("http");
 const app = require("./app");
 const mongoose = require("mongoose");
 const fs = require("fs");
 
+//---------------------Port utilisateur
 const normalizePort = (val) => {
   const port = parseInt(val, 10);
 
@@ -37,10 +40,13 @@ const errorHandler = (error) => {
       throw error;
   }
 };
+
+//---------------------SSL (pas intégré)
 const options = {
   key: fs.readFileSync("key.pem"),
   cert: fs.readFileSync("cert.pem"),
 };
+
 const server = http.createServer(app);
 
 server.on("error", errorHandler);

@@ -1,3 +1,5 @@
+//------------------------------------------SAUVEGARDE DES IMAGES
+
 const multer = require("multer");
 
 const MIME_TYPES = {
@@ -7,13 +9,19 @@ const MIME_TYPES = {
 };
 
 const storage = multer.diskStorage({
-  destination: (req, file, callback) => {
-    callback(null, "images");
+
+// Repertoire de destination
+  destination: (req, file, cb) => {
+    cb(null, "images");
   },
-  filename: (req, file, callback) => {
+  filename: (req, file, cb) => {
+
+// Les espaces contenus dans les noms d'images sont remplacés par des underscores    
     const name = file.originalname.split(" ").join("_");
+
+// Formatage du nom de l'image
     const extension = MIME_TYPES[file.mimetype];
-    callback(null, "sauce" + Date.now() + "." + extension);
+    cb(null, "sauce" + Date.now() + "." + extension);
   },
 });
 

@@ -1,3 +1,5 @@
+//---------------------------------APPLICATIONS
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -6,13 +8,14 @@ const app = express();
 const helmet = require("helmet");
 require('dotenv').config();
 
-app.use(helmet());
-
 const saucesRoutes = require("./routes/sauces");
 const usersRoutes = require("./routes/users");
 
+
+//----------------------------Base de données
 mongoose
   .connect(
+    // Identifiants masqués via dotenv
     process.env_user.DB_URL,
     {
       useNewUrlParser: true,
@@ -22,6 +25,9 @@ mongoose
   )
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
+
+//----------------------------Sécurisation des headers
+app.use(helmet());
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");

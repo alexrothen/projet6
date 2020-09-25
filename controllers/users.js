@@ -1,12 +1,12 @@
+//-----------------------LOGIQUE METIERS DES ROUTES USERS
+
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-//-----------------------LOGIQUE METIERS DES ROUTES USERS
-
 //-----------------------Création d'un nouvel utilisateur
 exports.signup = (req, res, next) => {
-  // Encodage du mot de passe :
+  // Encodage du mot de passe 
   bcrypt
     .hash(req.body.password, 10)
     .then((hash) => {
@@ -38,6 +38,7 @@ exports.login = (req, res, next) => {
           }
           res.status(200).json({
             userId: user._id,
+            // Création du jeton d'authentification      
             token: jwt.sign({ userId: user._id }, "RANDOM_TOKEN_SECRET", {
               expiresIn: "24h",
             }),

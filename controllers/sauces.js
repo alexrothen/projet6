@@ -1,7 +1,7 @@
+//---------------------------------------LOGIQUE METIERS DES ROUTES SAUCES
+
 const Sauce = require("../models/sauce");
 const fs = require("fs");
-
-//-----------------------LOGIQUE METIERS DES ROUTES SAUCES
 
 //-----------------------Création d'une sauce (POST)
 exports.createSauce = (req, res, next) => {
@@ -85,8 +85,7 @@ exports.getAllSauces = (req, res, next) => {
 //-----------------------Thumbs up/down (POST)
 exports.likeSauce = (req, res, next) => {
   switch (req.body.like) {
-	
-	// L'utilisateur n'aime pas la sauce :
+    // L'utilisateur n'aime pas la sauce :
     case -1:
       Sauce.updateOne(
         { _id: req.params.id },
@@ -109,12 +108,12 @@ exports.likeSauce = (req, res, next) => {
         )
         .catch((error) => res.status(400).json({ error }));
       break;
-	
-	  // L'utilisateur change d'avis...
+
+    // L'utilisateur change d'avis...
     case 0:
       Sauce.findOne({ _id: req.params.id }).then((sauce) => {
-		//...il retire son like :
-		
+        //...il retire son like :
+
         if (sauce.usersLiked.includes(req.body.userId)) {
           Sauce.updateOne(
             { _id: req.params.id },
@@ -124,11 +123,10 @@ exports.likeSauce = (req, res, next) => {
               res.status(200).json({ message: "Vous changez d'avis...dommage" })
             )
             .catch((error) => res.status(400).json({ error }));
-          console.log("Vous changez d'avis...dommage");
-		} 
-		
-		//...il retire son dislike :
-		else if (sauce.usersDisliked.includes(req.body.userId)) {
+        }
+
+        //...il retire son dislike :
+        else if (sauce.usersDisliked.includes(req.body.userId)) {
           Sauce.updateOne(
             { _id: req.params.id },
             {
@@ -137,12 +135,9 @@ exports.likeSauce = (req, res, next) => {
             }
           )
             .then(() =>
-              res
-                .status(200)
-                .json({ message: "Il fallait juste le temps de s'y habituer" })
+              res.status(200).json({ message: "Il fallait juste le temps de s'y habituer" })
             )
             .catch((error) => res.status(400).json({ error }));
-          console.log("Il fallait juste le temps de s'y habituer");
         }
       });
       break;
