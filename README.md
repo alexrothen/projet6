@@ -1,6 +1,6 @@
-# PROJET 6 : Construisez une API sécurisée pour une application d'avis gastronomiques
+## PROJET 6 : Construisez une API sécurisée pour une application d'avis gastronomiques
 
-## Configuration
+### Configuration
 
 Dans .env_user, remplacez :
 
