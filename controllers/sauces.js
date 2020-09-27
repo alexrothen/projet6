@@ -31,7 +31,7 @@ exports.modifySauce = (req, res, next) => {
         // Récupération du nom du fichier-image via split()
         const filename = sauce.imageUrl.split("/images/")[1];
         // Suppression du fichier
-        fs.unlink(`images/${filename}`);}),
+        fs.unlinkSync(`images/${filename}`);}),
       {
         ...JSON.parse(req.body.sauce),
         imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
