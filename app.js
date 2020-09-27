@@ -42,10 +42,13 @@ app.use((req, res, next) => {
   next();
 });
 
+//----------------------------Transformation de la requête en JSON
 app.use(bodyParser.json());
 
+//----------------------------Local path "images"
 app.use("/images", express.static(path.join(__dirname, "images")));
 
+//----------------------------Routing
 app.use("/api/sauces", saucesRoutes);
 app.use("/api/auth", usersRoutes);
 

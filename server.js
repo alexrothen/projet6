@@ -3,7 +3,6 @@
 const http = require("http");
 const app = require("./app");
 const mongoose = require("mongoose");
-const fs = require("fs");
 
 //---------------------Port utilisateur
 const normalizePort = (val) => {
@@ -39,12 +38,6 @@ const errorHandler = (error) => {
     default:
       throw error;
   }
-};
-
-//---------------------SSL (pas intégré)
-const options = {
-  key: fs.readFileSync("key.pem"),
-  cert: fs.readFileSync("cert.pem"),
 };
 
 const server = http.createServer(app);
