@@ -13,10 +13,9 @@ const usersRoutes = require("./routes/users");
 
 
 //----------------------------Base de données
-mongoose
-  .connect(
+mongoose.connect(
     // Identifiants masqués via dotenv
-    process.env_user.DB_URL,
+    process.env.DB_URL,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,

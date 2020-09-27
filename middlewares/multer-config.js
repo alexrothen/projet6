@@ -14,12 +14,12 @@ const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "images");
   },
+
+// Nom du fichier  
   filename: (req, file, cb) => {
-
-// Les espaces contenus dans les noms d'images sont remplacés par des underscores    
+    // Les espaces contenus dans les noms d'images sont remplacés par des underscores    
     const name = file.originalname.split(" ").join("_");
-
-// Formatage du nom de l'image
+    // Formatage du nom de l'image
     const extension = MIME_TYPES[file.mimetype];
     cb(null, "sauce" + Date.now() + "." + extension);
   },
