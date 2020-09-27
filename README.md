@@ -4,7 +4,7 @@
 
 Dans [.env_user](.env_user), remplacez :
 
-```md
+```html
 DB_URL=mongodb+srv://<USER>:<PASSWORD>@<CLUSTER>.jh97xmongodb.net/test?retryWrites=true&w=majority
 
 <USER> <!-- nom d'utilisateur MongoDB -->
